@@ -49,7 +49,7 @@ impl TryClone for OwnedFd {
         target_os = "motor"
     ))
 ))]
-impl !ForwardTryCloneToClone for UnixStream {}
+impl !ForwardTryCloneToClone for BorrowedFd<'_> {}
 #[cfg(not(any(
     target_arch = "wasm32",
     target_os = "hermit",
@@ -66,7 +66,7 @@ impl TryCloneToOwned for BorrowedFd<'_> {
 }
 
 #[cfg(feature = "blanket-impl")]
-impl !ForwardTryCloneToClone for UnixStream {}
+impl !ForwardTryCloneToClone for UnixDatagram {}
 impl TryClone for UnixDatagram {
     type Err = io::Error;
 
@@ -76,7 +76,7 @@ impl TryClone for UnixDatagram {
 }
 
 #[cfg(feature = "blanket-impl")]
-impl !ForwardTryCloneToClone for UnixStream {}
+impl !ForwardTryCloneToClone for UnixListener {}
 impl TryClone for UnixListener {
     type Err = io::Error;
 
