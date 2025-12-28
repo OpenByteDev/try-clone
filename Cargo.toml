@@ -1,0 +1,32 @@
+[package]
+name = "try-clone"
+version = "0.1.0"
+description = "Fallible cloning."
+repository = "https://github.com/OpenByteDev/try-clone"
+documentation = "https://docs.rs/try-clone"
+license = "MIT"
+authors = ["OpenByte <development.openbyte@gmail.com>"]
+edition = "2024"
+categories = ["rust-patterns"]
+keywords = [
+    "clone",
+    "try-clone",
+    "fallible",
+    "error-handling",
+    "std",
+]
+
+[features]
+default = ["std"]
+std = ["alloc"]
+alloc = []
+blanket-impl = ["nightly"]
+nightly = []
+doc-cfg = []
+
+[package.metadata.docs.rs]
+all-features = true
+targets = [
+    "x86_64-unknown-linux-gnu",
+    "x86_64-pc-windows-msvc",
+]
