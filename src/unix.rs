@@ -1,19 +1,31 @@
+#[cfg(feature = "blanket-impl")]
+use crate::ForwardTryCloneToClone;
 #[cfg(not(any(
     target_arch = "wasm32",
     target_os = "hermit",
     target_os = "trusty",
     target_os = "motor"
 )))]
-use std::os::fd::BorrowedFd;
-use std::os::fd::OwnedFd;
 use std::{
     io,
-    os::unix::net::{UnixDatagram, UnixListener, UnixStream},
+    os::{
+        fd::{BorrowedFd, OwnedFd},
+        unix::net::{UnixDatagram, UnixListener, UnixStream},
+    },
 };
 
-use crate::TryClone;
-use crate::TryCloneToOwned;
+use crate::{TryClone, TryCloneToOwned};
 
+#[cfg(all(
+    feature = "blanket-impl",
+    not(any(
+        target_arch = "wasm32",
+        target_os = "hermit",
+        target_os = "trusty",
+        target_os = "motor"
+    ))
+))]
+impl !ForwardTryCloneToClone for OwnedFd {}
 #[cfg(not(any(
     target_arch = "wasm32",
     target_os = "hermit",
@@ -28,6 +40,16 @@ impl TryClone for OwnedFd {
     }
 }
 
+#[cfg(all(
+    feature = "blanket-impl",
+    not(any(
+        target_arch = "wasm32",
+        target_os = "hermit",
+        target_os = "trusty",
+        target_os = "motor"
+    ))
+))]
+impl !ForwardTryCloneToClone for UnixStream {}
 #[cfg(not(any(
     target_arch = "wasm32",
     target_os = "hermit",
@@ -43,6 +65,8 @@ impl TryCloneToOwned for BorrowedFd<'_> {
     }
 }
 
+#[cfg(feature = "blanket-impl")]
+impl !ForwardTryCloneToClone for UnixStream {}
 impl TryClone for UnixDatagram {
     type Err = io::Error;
 
@@ -51,6 +75,8 @@ impl TryClone for UnixDatagram {
     }
 }
 
+#[cfg(feature = "blanket-impl")]
+impl !ForwardTryCloneToClone for UnixStream {}
 impl TryClone for UnixListener {
     type Err = io::Error;
 
@@ -59,6 +85,8 @@ impl TryClone for UnixListener {
     }
 }
 
+#[cfg(feature = "blanket-impl")]
+impl !ForwardTryCloneToClone for UnixStream {}
 impl TryClone for UnixStream {
     type Err = io::Error;
 
