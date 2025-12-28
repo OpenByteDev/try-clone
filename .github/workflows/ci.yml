@@ -29,8 +29,7 @@ jobs:
       with:
           target: ${{ matrix.target }}
     - name: Build
-      run: cargo build --target ${{ matrix.target }} --all-features
-      shell: pwsh
+      run: cargo build --target ${{ matrix.target }}
       
   hack:
     runs-on: windows-latest
