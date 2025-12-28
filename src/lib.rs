@@ -83,7 +83,8 @@ impl<T: Clone + ForwardTryCloneToClone> TryClone for T {
     }
 
     default fn try_clone_from(&mut self, source: &Self) -> Result<(), Self::Err> {
-        Ok(self.clone_from(source))
+        self.clone_from(source);
+        Ok(())
     }
 }
 
