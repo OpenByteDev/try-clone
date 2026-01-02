@@ -11,9 +11,9 @@ use crate::TryClone;
 #[cfg(feature = "blanket-impl")]
 impl !ForwardTryCloneToClone for File {}
 impl TryClone for File {
-    type Err = io::Error;
+    type Error = io::Error;
 
-    fn try_clone(&self) -> Result<Self, Self::Err> {
+    fn try_clone(&self) -> Result<Self, Self::Error> {
         File::try_clone(self)
     }
 }
@@ -21,9 +21,9 @@ impl TryClone for File {
 #[cfg(feature = "blanket-impl")]
 impl !ForwardTryCloneToClone for PipeReader {}
 impl TryClone for PipeReader {
-    type Err = io::Error;
+    type Error = io::Error;
 
-    fn try_clone(&self) -> Result<Self, Self::Err> {
+    fn try_clone(&self) -> Result<Self, Self::Error> {
         PipeReader::try_clone(self)
     }
 }
@@ -31,9 +31,9 @@ impl TryClone for PipeReader {
 #[cfg(feature = "blanket-impl")]
 impl !ForwardTryCloneToClone for PipeWriter {}
 impl TryClone for PipeWriter {
-    type Err = io::Error;
+    type Error = io::Error;
 
-    fn try_clone(&self) -> Result<Self, Self::Err> {
+    fn try_clone(&self) -> Result<Self, Self::Error> {
         PipeWriter::try_clone(self)
     }
 }
@@ -41,9 +41,9 @@ impl TryClone for PipeWriter {
 #[cfg(feature = "blanket-impl")]
 impl !ForwardTryCloneToClone for TcpStream {}
 impl TryClone for TcpStream {
-    type Err = io::Error;
+    type Error = io::Error;
 
-    fn try_clone(&self) -> Result<Self, Self::Err> {
+    fn try_clone(&self) -> Result<Self, Self::Error> {
         TcpStream::try_clone(self)
     }
 }
@@ -51,9 +51,9 @@ impl TryClone for TcpStream {
 #[cfg(feature = "blanket-impl")]
 impl !ForwardTryCloneToClone for TcpListener {}
 impl TryClone for TcpListener {
-    type Err = io::Error;
+    type Error = io::Error;
 
-    fn try_clone(&self) -> Result<Self, Self::Err> {
+    fn try_clone(&self) -> Result<Self, Self::Error> {
         TcpListener::try_clone(self)
     }
 }
@@ -61,9 +61,9 @@ impl TryClone for TcpListener {
 #[cfg(feature = "blanket-impl")]
 impl !ForwardTryCloneToClone for UdpSocket {}
 impl TryClone for UdpSocket {
-    type Err = io::Error;
+    type Error = io::Error;
 
-    fn try_clone(&self) -> Result<Self, Self::Err> {
+    fn try_clone(&self) -> Result<Self, Self::Error> {
         UdpSocket::try_clone(self)
     }
 }

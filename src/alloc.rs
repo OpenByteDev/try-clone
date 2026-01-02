@@ -27,9 +27,9 @@ impl<T: ?Sized, A> !ForwardTryCloneToClone for Box<T, A> {}
 #[cfg(feature = "nightly")]
 #[cfg(not(feature = "blanket-impl"))]
 impl<T: Clone, A: Allocator + Clone> TryClone for Box<T, A> {
-    type Err = AllocError;
+    type Error = AllocError;
 
-    fn try_clone(&self) -> Result<Self, Self::Err> {
+    fn try_clone(&self) -> Result<Self, Self::Error> {
         let alloc = Self::allocator(self).clone();
         Self::try_clone_from_ref_in(self, alloc)
     }
@@ -39,9 +39,9 @@ impl<T: Clone, A: Allocator + Clone> TryClone for Box<T, A> {
 impl<T: ?Sized, A> !ForwardTryCloneToClone for Arc<T, A> {}
 #[cfg(feature = "nightly")]
 impl<T: Clone, A: Allocator + Clone> TryClone for Arc<T, A> {
-    type Err = AllocError;
+    type Error = AllocError;
 
-    fn try_clone(&self) -> Result<Self, Self::Err> {
+    fn try_clone(&self) -> Result<Self, Self::Error> {
         let alloc = Self::allocator(self).clone();
         Self::try_clone_from_ref_in(self, alloc)
     }
@@ -51,9 +51,9 @@ impl<T: Clone, A: Allocator + Clone> TryClone for Arc<T, A> {
 impl<T: ?Sized, A> !ForwardTryCloneToClone for Rc<T, A> {}
 #[cfg(feature = "nightly")]
 impl<T: Clone, A: Allocator + Clone> TryClone for Rc<T, A> {
-    type Err = AllocError;
+    type Error = AllocError;
 
-    fn try_clone(&self) -> Result<Self, Self::Err> {
+    fn try_clone(&self) -> Result<Self, Self::Error> {
         let alloc = Self::allocator(self).clone();
         Self::try_clone_from_ref_in(self, alloc)
     }
@@ -63,9 +63,9 @@ impl<T: Clone, A: Allocator + Clone> TryClone for Rc<T, A> {
 impl<T: ?Sized, A> !ForwardTryCloneToClone for Vec<T, A> {}
 #[cfg(feature = "nightly")]
 impl<T: Clone, A: Allocator + Clone> TryClone for Vec<T, A> {
-    type Err = TryReserveError;
+    type Error = TryReserveError;
 
-    fn try_clone(&self) -> Result<Self, Self::Err> {
+    fn try_clone(&self) -> Result<Self, Self::Error> {
         let alloc = self.allocator().clone();
         let mut cloned = Self::try_with_capacity_in(self.len(), alloc)?;
         cloned.extend(self.iter().cloned());
@@ -77,9 +77,9 @@ impl<T: Clone, A: Allocator + Clone> TryClone for Vec<T, A> {
 impl<T: ?Sized, A> !ForwardTryCloneToClone for VecDeque<T, A> {}
 #[cfg(feature = "nightly")]
 impl<T: Clone, A: Allocator + Clone> TryClone for VecDeque<T, A> {
-    type Err = TryReserveError;
+    type Error = TryReserveError;
 
-    fn try_clone(&self) -> Result<Self, Self::Err> {
+    fn try_clone(&self) -> Result<Self, Self::Error> {
         let alloc = self.allocator().clone();
         let mut cloned = Self::new_in(alloc);
         cloned.try_reserve(self.len())?;
@@ -92,9 +92,9 @@ impl<T: Clone, A: Allocator + Clone> TryClone for VecDeque<T, A> {
 impl<T: ?Sized, A> !ForwardTryCloneToClone for BinaryHeap<T, A> {}
 #[cfg(feature = "nightly")]
 impl<T: Clone + Ord, A: Allocator + Clone> TryClone for BinaryHeap<T, A> {
-    type Err = TryReserveError;
+    type Error = TryReserveError;
 
-    fn try_clone(&self) -> Result<Self, Self::Err> {
+    fn try_clone(&self) -> Result<Self, Self::Error> {
         let alloc = self.allocator().clone();
         let mut cloned = Self::new_in(alloc);
         cloned.try_reserve(self.len())?;

@@ -32,20 +32,20 @@
 /// associated error type.
 pub trait TryClone: Sized {
     /// The error type returned when cloning fails.
-    type Err;
+    type Error;
 
     /// Tries to create a duplicate of the value.
     ///
     /// # Errors
-    /// Returns [`Err`] if cloning fails.
-    fn try_clone(&self) -> Result<Self, Self::Err>;
+    /// Returns [`Error`](TryClone::Error) if cloning fails.
+    fn try_clone(&self) -> Result<Self, Self::Error>;
 
     /// Performs copy-assignment from source.
     /// `a.clone_from(&b)` is equivalent to `a = b.clone()` in functionality, but can be overridden to reuse the resources of `a` to avoid unnecessary allocations.
     ///
     /// # Errors
-    /// Returns [`Err`] if cloning fails.
-    fn try_clone_from(&mut self, source: &Self) -> Result<(), Self::Err> {
+    /// Returns [`Error`](TryClone::Error) if cloning fails.
+    fn try_clone_from(&mut self, source: &Self) -> Result<(), Self::Error> {
         *self = source.try_clone()?;
         Ok(())
     }
@@ -59,13 +59,14 @@ pub trait TryCloneToOwned: Sized {
     /// The owned type produced by cloning.
     type Owned;
     /// The error type returned when cloning fails.
-    type Err;
+    type Error;
 
     /// Attempts to create an owned version of the value.
     ///
     /// # Errors
-    /// Returns [`Err`] if cloning fails.
-    fn try_clone_to_owned(&self) -> Result<Self::Owned, Self::Err>;
+    /// Returns [`Error`](TryCloneToOwned::Error) if cloning fails.
+    fn try_clone_to_owned(&self) -> Result<Self::Owned, Self::Error>;
+}
 }
 
 #[cfg(feature = "blanket-impl")]
@@ -76,13 +77,13 @@ include!("blanket_impl.rs");
 
 #[cfg(feature = "blanket-impl")]
 impl<T: Clone + ForwardTryCloneToClone> TryClone for T {
-    type Err = Infallible;
+    type Error = Infallible;
 
-    default fn try_clone(&self) -> Result<Self, Self::Err> {
+    default fn try_clone(&self) -> Result<Self, Self::Error> {
         Ok(self.clone())
     }
 
-    default fn try_clone_from(&mut self, source: &Self) -> Result<(), Self::Err> {
+    default fn try_clone_from(&mut self, source: &Self) -> Result<(), Self::Error> {
         self.clone_from(source);
         Ok(())
     }

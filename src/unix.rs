@@ -33,9 +33,9 @@ impl !ForwardTryCloneToClone for OwnedFd {}
     target_os = "motor"
 )))]
 impl TryClone for OwnedFd {
-    type Err = io::Error;
+    type Error = io::Error;
 
-    fn try_clone(&self) -> Result<Self, Self::Err> {
+    fn try_clone(&self) -> Result<Self, Self::Error> {
         OwnedFd::try_clone(self)
     }
 }
@@ -58,9 +58,9 @@ impl !ForwardTryCloneToClone for BorrowedFd<'_> {}
 )))]
 impl TryCloneToOwned for BorrowedFd<'_> {
     type Owned = OwnedFd;
-    type Err = io::Error;
+    type Error = io::Error;
 
-    fn try_clone_to_owned(&self) -> Result<Self::Owned, Self::Err> {
+    fn try_clone_to_owned(&self) -> Result<Self::Owned, Self::Error> {
         BorrowedFd::try_clone_to_owned(self)
     }
 }
@@ -68,9 +68,9 @@ impl TryCloneToOwned for BorrowedFd<'_> {
 #[cfg(feature = "blanket-impl")]
 impl !ForwardTryCloneToClone for UnixDatagram {}
 impl TryClone for UnixDatagram {
-    type Err = io::Error;
+    type Error = io::Error;
 
-    fn try_clone(&self) -> Result<Self, Self::Err> {
+    fn try_clone(&self) -> Result<Self, Self::Error> {
         UnixDatagram::try_clone(self)
     }
 }
@@ -78,9 +78,9 @@ impl TryClone for UnixDatagram {
 #[cfg(feature = "blanket-impl")]
 impl !ForwardTryCloneToClone for UnixListener {}
 impl TryClone for UnixListener {
-    type Err = io::Error;
+    type Error = io::Error;
 
-    fn try_clone(&self) -> Result<Self, Self::Err> {
+    fn try_clone(&self) -> Result<Self, Self::Error> {
         UnixListener::try_clone(self)
     }
 }
@@ -88,9 +88,9 @@ impl TryClone for UnixListener {
 #[cfg(feature = "blanket-impl")]
 impl !ForwardTryCloneToClone for UnixStream {}
 impl TryClone for UnixStream {
-    type Err = io::Error;
+    type Error = io::Error;
 
-    fn try_clone(&self) -> Result<Self, Self::Err> {
+    fn try_clone(&self) -> Result<Self, Self::Error> {
         UnixStream::try_clone(self)
     }
 }

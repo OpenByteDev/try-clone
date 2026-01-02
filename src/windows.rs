@@ -9,9 +9,9 @@ use std::{
 #[cfg(feature = "blanket-impl")]
 impl !ForwardTryCloneToClone for OwnedHandle {}
 impl TryClone for OwnedHandle {
-    type Err = io::Error;
+    type Error = io::Error;
 
-    fn try_clone(&self) -> Result<Self, Self::Err> {
+    fn try_clone(&self) -> Result<Self, Self::Error> {
         OwnedHandle::try_clone(self)
     }
 }
@@ -19,27 +19,27 @@ impl TryClone for OwnedHandle {
 #[cfg(feature = "blanket-impl")]
 impl !ForwardTryCloneToClone for OwnedSocket {}
 impl TryClone for OwnedSocket {
-    type Err = io::Error;
+    type Error = io::Error;
 
-    fn try_clone(&self) -> Result<Self, Self::Err> {
+    fn try_clone(&self) -> Result<Self, Self::Error> {
         OwnedSocket::try_clone(self)
     }
 }
 
 impl TryCloneToOwned for BorrowedHandle<'_> {
     type Owned = OwnedHandle;
-    type Err = io::Error;
+    type Error = io::Error;
 
-    fn try_clone_to_owned(&self) -> Result<Self::Owned, Self::Err> {
+    fn try_clone_to_owned(&self) -> Result<Self::Owned, Self::Error> {
         BorrowedHandle::try_clone_to_owned(self)
     }
 }
 
 impl TryCloneToOwned for BorrowedSocket<'_> {
     type Owned = OwnedSocket;
-    type Err = io::Error;
+    type Error = io::Error;
 
-    fn try_clone_to_owned(&self) -> Result<Self::Owned, Self::Err> {
+    fn try_clone_to_owned(&self) -> Result<Self::Owned, Self::Error> {
         BorrowedSocket::try_clone_to_owned(self)
     }
 }
