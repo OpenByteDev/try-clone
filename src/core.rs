@@ -6,6 +6,6 @@ impl<T: TryClone> TryClone for Option<T> {
     type Error = T::Error;
 
     fn try_clone(&self) -> Result<Self, Self::Error> {
-        self.as_ref().map(|inner| inner.try_clone()).transpose()
+        self.as_ref().map(crate::try_clone).transpose()
     }
 }

@@ -67,6 +67,25 @@ pub trait TryCloneToOwned: Sized {
     /// Returns [`Error`](TryCloneToOwned::Error) if cloning fails.
     fn try_clone_to_owned(&self) -> Result<Self::Owned, Self::Error>;
 }
+
+/// Creates a new instance of a value by fallibly cloning it.
+///
+/// This is a convenience wrapper around [`TryClone::try_clone`].
+///
+/// # Errors
+/// Returns an error if the underlying cloning operation fails.
+pub fn try_clone<T: TryClone>(o: &T) -> Result<T, T::Error> {
+    o.try_clone()
+}
+
+/// Creates an owned version of a borrowed value fallibly.
+///
+/// This is a convenience wrapper around [`TryCloneToOwned::try_clone_to_owned`].
+///
+/// # Errors
+/// Returns an error if the conversion to an owned type fails.
+pub fn try_clone_to_owned<T: TryCloneToOwned>(o: &T) -> Result<T::Owned, T::Error> {
+    o.try_clone_to_owned()
 }
 
 #[cfg(feature = "blanket-impl")]
