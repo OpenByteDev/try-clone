@@ -1,6 +1,6 @@
 [package]
 name = "try-clone"
-version = "0.1.1"
+version = "0.2.0"
 description = "Fallible cloning."
 repository = "https://github.com/OpenByteDev/try-clone"
 documentation = "https://docs.rs/try-clone"
